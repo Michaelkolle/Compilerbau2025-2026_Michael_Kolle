@@ -1,15 +1,13 @@
 import java.util.*;
 
-// import my.pkg.*;
+
 public class PrettyPrinterVisitor extends Aufgabe3BaseVisitor<String> {
   private int indentLevel = 0;
-  private static final String INDENT = "    "; // 4 Leerzeichen
+  private static final String INDENT = "    "; 
 
   private String indent() {
     return INDENT.repeat(indentLevel);
   }
-
-  // The rest of the methods remain unchanged
 
   @Override
   public String visitAssignment(Aufgabe3Parser.AssignmentContext ctx) {
@@ -26,7 +24,7 @@ public class PrettyPrinterVisitor extends Aufgabe3BaseVisitor<String> {
     boolean hasElse = ctx.getChild(ctx.getChildCount() - 2).getText().equals("else");
 
     if (hasElse) {
-      int split = stmtCount / 2; // Annahme: Hälfte if, Hälfte else
+      int split = stmtCount / 2;
       for (int i = 0; i < split; i++) sb.append(visit(ctx.statement(i)));
       indentLevel--;
       sb.append(indent()).append("else do\n");

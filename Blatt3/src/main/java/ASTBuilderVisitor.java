@@ -25,12 +25,9 @@ public class ASTBuilderVisitor extends Aufgabe3BaseVisitor<AstNode> {
     List<AstNode> thenBranch = new ArrayList<>();
     List<AstNode> elseBranch = new ArrayList<>();
 
-    // the grammar provides statement() which returns a List<StatementContext>
-    // all initial statements belong to the then-branch until an optional else is present
     int total = ctx.statement().size();
     if (total == 0) return new IfNode(condition, thenBranch, elseBranch);
 
-    // Detect whether an else branch exists by finding the 'else' terminal in the children
     int elseTokenIndex = -1;
     for (int i = 0; i < ctx.getChildCount(); i++) {
       var child = ctx.getChild(i);
@@ -43,12 +40,12 @@ public class ASTBuilderVisitor extends Aufgabe3BaseVisitor<AstNode> {
     }
 
     if (elseTokenIndex < 0) {
-      // no else: all statements belong to then-branch
+      
       for (Aufgabe3Parser.StatementContext stmtCtx : ctx.statement()) {
         thenBranch.add(visitStatement(stmtCtx));
       }
     } else {
-      // split statements by token position relative to the 'else' token
+     
       for (Aufgabe3Parser.StatementContext stmtCtx : ctx.statement()) {
         if (stmtCtx.getStart().getTokenIndex() < elseTokenIndex)
           thenBranch.add(visitStatement(stmtCtx));

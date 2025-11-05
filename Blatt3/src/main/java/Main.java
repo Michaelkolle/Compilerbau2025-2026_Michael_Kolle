@@ -12,11 +12,10 @@ public class Main {
 
     ParseTree tree = parser.program();
 
-    // Parse Tree → AST
+    
     ASTBuilderVisitor builder = new ASTBuilderVisitor();
     ProgramNode ast = (ProgramNode) builder.visit(tree);
-
-    // AST → Pretty Output
+    
     AstPrettyPrinter printer = new AstPrettyPrinter();
     System.out.println(printer.print(ast));
   }
